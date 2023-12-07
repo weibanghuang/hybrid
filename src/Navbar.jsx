@@ -83,7 +83,7 @@ function Navbar({
       }
       const doc = new jsPDF("p", "px", [300, pdf_height]);
       var img = new Image();
-      img.src = "public/hybrid.png";
+      img.src = "hybrid.png";
       doc.addImage(img, "png", 267, pdf_height - 33, 30, 30);
 
       doc.text("Hybrid Trainings", 10, 15);
@@ -91,7 +91,7 @@ function Navbar({
       doc.text("https://weibanghuang.github.io/hybrid", 10, pdf_height - 10);
 
       doc.text(temp, 10, 30);
-      console.log(doc.save("hybrid.pdf"));
+      doc.save("hybrid.pdf");
     }
   }
 
