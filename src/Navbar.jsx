@@ -66,14 +66,6 @@ function Navbar({
   }
   function printSomething() {
     if (confirm("Export PDF")) {
-      const doc = new jsPDF("p", "px", [300, 300]);
-      var img = new Image();
-      img.src = "src/assets/logo/hybrid.png";
-      doc.addImage(img, "png", 267, 267, 30, 30);
-
-      doc.text("Hybrid Trainings", 10, 15);
-
-      doc.text("https://weibanghuang.github.io/hybrid", 10, 290);
       let temp = "";
       for (let i in navbarPDF) {
         temp =
@@ -85,8 +77,21 @@ function Navbar({
           navbarPDF[i].weight +
           " pound(s)\n";
       }
+      let pdf_height = 20 + 15 * navbarPDF.length;
+      if (pdf_height < 300) {
+        pdf_height = 300;
+      }
+      const doc = new jsPDF("p", "px", [300, pdf_height]);
+      var img = new Image();
+      img.src = "public/hybrid.png";
+      doc.addImage(img, "png", 267, pdf_height - 33, 30, 30);
+
+      doc.text("Hybrid Trainings", 10, 15);
+
+      doc.text("https://weibanghuang.github.io/hybrid", 10, pdf_height - 10);
+
       doc.text(temp, 10, 30);
-      doc.save("hybrid.pdf");
+      console.log(doc.save("hybrid.pdf"));
     }
   }
 
