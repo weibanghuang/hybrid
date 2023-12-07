@@ -153,6 +153,9 @@ body {
 
 .navbar--logo {
   margin-right: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .navbar--menu {
@@ -198,6 +201,9 @@ body {
   margin-top: -10px;
   padding-top: 0px;
   margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   background-color: var(--line-color);
   color: var(--main-color);
@@ -205,28 +211,33 @@ body {
 
 .wrapper div {
   position: absolute;
-  padding: 4px;
-  animation: slider 16s infinite linear;
+  animation: slider 20s infinite linear;
 }
 
 .wrapper div:nth-child(1) {
   left: 100%;
-  animation-delay: -16;
+  animation-delay: -20;
 }
 
 .wrapper div:nth-child(2) {
   left: 100%;
-  animation-delay: -12s;
+  animation-delay: -16s;
 }
 
 .wrapper div:nth-child(3) {
   left: 100%;
-  animation-delay: -8s;
+  animation-delay: -12s;
 }
 
 .wrapper div:nth-child(4) {
   left: 100%;
+  animation-delay: -8s;
+}
+
+.wrapper div:nth-child(5) {
+  left: 100%;
   animation-delay: -4s;
+  filter: invert(1);
 }
 
 @keyframes slider {

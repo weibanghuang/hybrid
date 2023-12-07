@@ -1,4 +1,5 @@
 import React from "react";
+import CreatableSelect from "react-select/creatable";
 
 function Inputbox({
   workout,
@@ -9,7 +10,36 @@ function Inputbox({
   setLocalRep,
   localWeight,
   setLocalWeight,
+  inputWorkout,
 }) {
+  const customStyles = {
+    control: (base, state) => ({
+      ...base,
+      background: "#f6f6f6",
+      borderRadius: "8px",
+      border: 0,
+      boxShadow:
+        "0 4px 3px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19)",
+      marginBottom: "15px",
+    }),
+    menu: (base, state) => ({
+      ...base,
+      marginTop: 0,
+    }),
+    menuList: (base) => ({
+      ...base,
+      padding: 0,
+    }),
+  };
+  const [options, setOptions] = React.useState(inputWorkout);
+  // const [InputLocalName, setInputLocalName] = React.useState(localName);
+  // React.useEffect(() => {
+  //   console.log("hehe");
+  //   setLocalName((prevInputLocalName) => localName);
+  // }, [localName]);
+  React.useEffect(() => {
+    setOptions((prevOptions) => inputWorkout);
+  }, [inputWorkout]);
   function updateWorkout(target) {
     if (target.id === "localName") {
       setLocalName((prevLocalName) => target.value);
@@ -84,7 +114,7 @@ function Inputbox({
 
   return (
     <div className="inputbox--wrap">
-      <input
+      {/* <input
         id="localName"
         className="inputbox--name"
         type="text"
@@ -93,6 +123,27 @@ function Inputbox({
         onChange={(evt) => {
           updateWorkout(evt.target);
         }}
+      /> */}
+      <CreatableSelect
+        placeholder={"Workout Name"}
+        value={{ value: localName, label: localName }}
+        onChange={(e) => {
+          setLocalName((prevLocalName) =>
+            typeof e.value === "undefined" ? "" : e.value
+          );
+          setLocalRep((prevLocalRep) =>
+            typeof e.rep === "undefined" ? "" : e.rep
+          );
+          setLocalWeight((prevLocalWeight) =>
+            typeof e.weight === "undefined" ? "" : e.weight
+          );
+        }}
+        options={options}
+        components={{
+          DropdownIndicator: () => null,
+          IndicatorSeparator: () => null,
+        }}
+        styles={customStyles}
       />
       <input
         id="localRep"

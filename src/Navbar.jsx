@@ -1,5 +1,6 @@
 import React from "react";
-import Papa from "papaparse";
+import { jsPDF } from "jspdf";
+
 function Navbar({
   workout,
   setWorkout,
@@ -9,6 +10,7 @@ function Navbar({
   setLocalRep,
   localWeight,
   setLocalWeight,
+  navbarPDF,
 }) {
   const [menu, setMenu] = React.useState(0);
 
@@ -50,29 +52,49 @@ function Navbar({
     setWorkout((prevWorkout) => obj);
   }
   function export_json() {
-    const dataStr =
-      "data:application/json;charset=utf-8," +
-      encodeURIComponent(JSON.stringify(workout));
-    const download = document.createElement("a");
-    download.setAttribute("href", dataStr);
-    download.setAttribute("download", "workout" + ".json");
-    document.body.appendChild(download);
-    download.click();
-    download.remove();
+    if (confirm("Export JSON Data?")) {
+      const dataStr =
+        "data:application/json;charset=utf-8," +
+        encodeURIComponent(JSON.stringify(workout));
+      const download = document.createElement("a");
+      download.setAttribute("href", dataStr);
+      download.setAttribute("download", "workout" + ".json");
+      document.body.appendChild(download);
+      download.click();
+      download.remove();
+    }
   }
   function printSomething() {
-    // setWorkout((prevWorkOut) => [
-    //   ...workout,
-    //   ["10231122", "205632", "08", 56, 32, "PM", "Squat", "12", "12"],
-    // ]);
-    console.log("......", workout);
+    if (confirm("Export PDF")) {
+      const doc = new jsPDF("p", "px", [300, 300]);
+      var img = new Image();
+      img.src = "src/assets/logo/hybrid.png";
+      doc.addImage(img, "png", 267, 267, 30, 30);
+
+      doc.text("Hybrid Trainings", 10, 15);
+
+      doc.text("https://weibanghuang.github.io/hybrid", 10, 290);
+      let temp = "";
+      for (let i in navbarPDF) {
+        temp =
+          temp +
+          navbarPDF[i].name +
+          " " +
+          navbarPDF[i].rep +
+          " rep(s) " +
+          navbarPDF[i].weight +
+          " pound(s)\n";
+      }
+      doc.text(temp, 10, 30);
+      doc.save("hybrid.pdf");
+    }
   }
 
   if (menu == 0) {
     return (
       <div className="navbar--wrap">
         <div className="navbar--wrap--inline">
-          <div className="navbar--logo">HYBRID</div>
+          <div className="navbar--logo">HYBRID TRAININGS</div>
           <button className="navbar--menu" onClick={toggleMenu}>
             MENU
           </button>
@@ -83,7 +105,7 @@ function Navbar({
     return (
       <div className="navbar--wrap">
         <div className="navbar--wrap--inline">
-          <div className="navbar--logo">HYBRID</div>
+          <div className="navbar--logo">HYBRID TRAININGS</div>
           <button className="navbar--menu" onClick={toggleMenu}>
             CLOSE
           </button>

@@ -9,6 +9,9 @@ function Logoslide() {
           <div className="item">SWIMMING</div>
           <div className="item">CYCLING</div>
           <div className="item">RUNNING</div>
+          <div className="item">
+            <img src="hybrid.svg" />
+          </div>
         </div>
       </div>
     </>

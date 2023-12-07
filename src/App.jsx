@@ -11,9 +11,11 @@ import "./App.css";
 function App() {
   const [todayWorkout, setTodayWorkout] = React.useState([]);
   const [sortedWorkout, setSortedWorkout] = React.useState([]);
+  const [inputWorkout, setInputWorkout] = React.useState([]);
   const [todayHour, setTodayHour] = React.useState(0);
   const [todayMinute, setTodayMinute] = React.useState(0);
   const [todaySecond, setTodaySecond] = React.useState(0);
+  const [navbarPDF, setNavbarPDF] = React.useState([]);
   const [workout, setWorkout] = React.useState(
     () => JSON.parse(localStorage.getItem("workout")) || []
   );
@@ -28,8 +30,12 @@ function App() {
   );
   React.useEffect(() => {
     localStorage.setItem("workout", JSON.stringify(workout));
-    setTodayWorkout((prevTodayWorkout) => getTodayWorkout(workout));
-    setSortedWorkout((prevSortedWorkout) => getSortedWorkout(workout));
+    const [c, d] = getTodayWorkout(workout);
+    setTodayWorkout((prevTodayWorkout) => c);
+    setNavbarPDF((prevNavbarPDF) => d);
+    const [a, b] = getSortedWorkout(workout);
+    setSortedWorkout((prevSortedWorkout) => a);
+    setInputWorkout((prevInputWorkout) => b);
   }, [workout]);
   React.useEffect(() => {
     localStorage.setItem("localName", JSON.stringify(localName));
@@ -46,31 +52,17 @@ function App() {
     }
     return a;
   }
-  // function getMaxedWorkout(item) {
-  //   if (item.length < 2) {
-  //     const cards = item.map((item) => {
-  //       return (
-  //         <Workoutlist
-  //           key={item[0] + item[1] + item[2]}
-  //           name={item[0]}
-  //           rep={item[1]}
-  //           weight={item[2]}
-  //         />
-  //       );
-  //     return cards;
-  //   }
-  //   const temp = Object.values(
-  //     item.reduce(function (r, e) {
-  //       if (!r[e.name]) r[e.name] = e;
-  //       else if (e.weight > r[e.name].weight) r[e.name] = e;
-  //       return r;
-  //     }, {})
-  //   );
-  //   return temp.sort((a, b) => a.name.localeCompare(b.name));
-  // }
+
   function getSortedWorkout(item) {
+    let input_sorted_workout = [];
     if (item.length < 2) {
       const cards = item.map((item, index) => {
+        input_sorted_workout.push({
+          value: item.name,
+          label: item.name,
+          rep: item.rep,
+          weight: item.weight,
+        });
         return (
           <Workoutlist
             key={index}
@@ -86,7 +78,7 @@ function App() {
           />
         );
       });
-      return cards;
+      return [cards, input_sorted_workout];
     }
     let maxPrev = [];
     let workouts_copy = [...item];
@@ -105,6 +97,15 @@ function App() {
       }
     }
     maxPrev.sort((a, b) => a[2].localeCompare(b[2]));
+
+    for (let i = 0; i < maxPrev.length; i++) {
+      input_sorted_workout.push({
+        value: maxPrev[i][2],
+        label: maxPrev[i][2],
+        rep: maxPrev[i][3],
+        weight: maxPrev[i][4],
+      });
+    }
     let maxMax = Object.values(
       item.reduce(function (r, e) {
         if (!r[e.name]) r[e.name] = e;
@@ -130,7 +131,7 @@ function App() {
         />
       );
     });
-    return cards;
+    return [cards, input_sorted_workout];
   }
 
   function getTodayWorkout(item) {
@@ -170,7 +171,7 @@ function App() {
       );
     });
 
-    return cards;
+    return [cards, temp];
   }
 
   return (
@@ -185,6 +186,7 @@ function App() {
         setLocalRep={setLocalRep}
         localWeight={localWeight}
         setLocalWeight={setLocalWeight}
+        navbarPDF={navbarPDF}
       />
       <div className="workoutlist--wrap">{sortedWorkout}</div>
 
@@ -197,6 +199,7 @@ function App() {
         setLocalRep={setLocalRep}
         localWeight={localWeight}
         setLocalWeight={setLocalWeight}
+        inputWorkout={inputWorkout}
       />
       <Clock />
       {todayWorkout}
