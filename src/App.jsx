@@ -6,7 +6,6 @@ import Workoutbox from "./Workoutbox.jsx";
 import Workoutlist from "./Workoutlist.jsx";
 import Logoslide from "./Logoslide.jsx";
 import Clock from "./Clock.jsx";
-
 import "./App.css";
 function App() {
   const [todayWorkout, setTodayWorkout] = React.useState([]);

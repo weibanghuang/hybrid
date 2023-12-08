@@ -65,7 +65,7 @@ function Navbar({
     }
   }
   function printSomething() {
-    if (confirm("Export PDF")) {
+    if (confirm("Export PDF?")) {
       let temp = "";
       for (let i in navbarPDF) {
         temp =
@@ -77,20 +77,61 @@ function Navbar({
           navbarPDF[i].weight +
           " pound(s)\n";
       }
-      let pdf_height = 20 + 15 * navbarPDF.length;
+      let pdf_height = 40 + 10 * navbarPDF.length;
       if (pdf_height < 300) {
         pdf_height = 300;
       }
       const doc = new jsPDF("p", "px", [300, pdf_height]);
+      doc.setFillColor("#f6f6f6");
+      doc.rect(0, 0, 300, pdf_height, "F");
+      doc.setFillColor("#ff6961");
+      doc.roundedRect(
+        Math.floor(Math.random() * (300 - 71)) + 1,
+        Math.floor(Math.random() * (pdf_height - 71)) + 1,
+        69,
+        69,
+        8,
+        8,
+        "F"
+      );
+      doc.setFillColor("#93e9be");
+      doc.roundedRect(
+        Math.floor(Math.random() * (300 - 71)) + 1,
+        Math.floor(Math.random() * (pdf_height - 71)) + 1,
+        69,
+        69,
+        8,
+        8,
+        "F"
+      );
+      doc.setFillColor("#abd7eb");
+      doc.roundedRect(
+        Math.floor(Math.random() * (300 - 71)) + 1,
+        Math.floor(Math.random() * (pdf_height - 71)) + 1,
+        69,
+        69,
+        8,
+        8,
+        "F"
+      );
+      doc.setFont("Courier");
       var img = new Image();
       img.src = "hybrid.png";
       doc.addImage(img, "png", 267, pdf_height - 33, 30, 30);
+      doc.addImage(img, "png", 267, 3, 30, 30);
+      doc.setFontSize(20);
+      let dateObj = new Date();
+      let month = dateObj.getUTCMonth() + 1; //months from 1-12
+      let day = dateObj.getUTCDate();
+      let year = dateObj.getUTCFullYear();
 
-      doc.text("Hybrid Trainings", 10, 15);
+      let newdate = year + "-" + month + "/" + day;
+      doc.text("Hybrid Trainings\n" + newdate, 10, 15);
 
+      doc.setFontSize(12);
       doc.text("https://weibanghuang.github.io/hybrid", 10, pdf_height - 10);
-
-      doc.text(temp, 10, 30);
+      doc.setFontSize(10);
+      doc.text(temp, 10, 60);
       doc.save("hybrid.pdf");
     }
   }

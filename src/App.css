@@ -259,3 +259,9 @@ body {
   font-family: "Courier New", Courier, monospace;
   margin-bottom: 5px;
 }
+
+.canvas {
+  /* display: none; */
+  border-style: solid;
+  border-color: black;
+}
