@@ -121,9 +121,9 @@ function Navbar({
       doc.addImage(img, "png", 267, 3, 30, 30);
       doc.setFontSize(20);
       let dateObj = new Date();
-      let month = dateObj.getUTCMonth() + 1; //months from 1-12
-      let day = dateObj.getUTCDate();
-      let year = dateObj.getUTCFullYear();
+      let month = dateObj.getMonth() + 1; //months from 1-12
+      let day = dateObj.getDate();
+      let year = dateObj.getFullYear();
 
       let newdate = year + "-" + month + "/" + day;
       doc.text("Hybrid Trainings\n" + newdate, 10, 15);
