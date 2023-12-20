@@ -261,7 +261,5 @@ body {
 }
 
 .canvas {
-  /* display: none; */
-  border-style: solid;
-  border-color: black;
+  display: none;
 }

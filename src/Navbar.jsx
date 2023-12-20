@@ -65,75 +65,19 @@ function Navbar({
     }
   }
   function printSomething() {
-    if (confirm("Export PDF?")) {
-      let temp = "";
-      for (let i in navbarPDF) {
-        temp =
-          temp +
-          navbarPDF[i].name +
-          " " +
-          navbarPDF[i].rep +
-          " rep(s) " +
-          navbarPDF[i].weight +
-          " pound(s)\n";
-      }
-      let pdf_height = 40 + 10 * navbarPDF.length;
-      if (pdf_height < 300) {
-        pdf_height = 300;
-      }
-      const doc = new jsPDF("p", "px", [300, pdf_height]);
-      doc.setFillColor("#f6f6f6");
-      doc.rect(0, 0, 300, pdf_height, "F");
-      doc.setFillColor("#ff6961");
-      doc.roundedRect(
-        Math.floor(Math.random() * (300 - 71)) + 1,
-        Math.floor(Math.random() * (pdf_height - 71)) + 1,
-        69,
-        69,
-        8,
-        8,
-        "F"
-      );
-      doc.setFillColor("#93e9be");
-      doc.roundedRect(
-        Math.floor(Math.random() * (300 - 71)) + 1,
-        Math.floor(Math.random() * (pdf_height - 71)) + 1,
-        69,
-        69,
-        8,
-        8,
-        "F"
-      );
-      doc.setFillColor("#abd7eb");
-      doc.roundedRect(
-        Math.floor(Math.random() * (300 - 71)) + 1,
-        Math.floor(Math.random() * (pdf_height - 71)) + 1,
-        69,
-        69,
-        8,
-        8,
-        "F"
-      );
-      doc.setFont("Courier");
-      var img = new Image();
-      img.src = "hybrid.png";
-      doc.addImage(img, "png", 267, pdf_height - 33, 30, 30);
-      doc.addImage(img, "png", 267, 3, 30, 30);
-      doc.setFontSize(20);
-      let dateObj = new Date();
-      let month = dateObj.getMonth() + 1; //months from 1-12
-      let day = dateObj.getDate();
-      let year = dateObj.getFullYear();
-
-      let newdate = year + "-" + month + "/" + day;
-      doc.text("Hybrid Trainings\n" + newdate, 10, 15);
-
-      doc.setFontSize(12);
-      doc.text("https://weibanghuang.github.io/hybrid", 10, pdf_height - 10);
-      doc.setFontSize(10);
-      doc.text(temp, 10, 60);
-      doc.save("hybrid.pdf");
+    let temp = "";
+    for (let i in navbarPDF) {
+      temp =
+        temp +
+        navbarPDF[i].name +
+        " " +
+        navbarPDF[i].rep +
+        " rep(s) " +
+        navbarPDF[i].weight +
+        " pound(s)\n";
     }
+    navigator.clipboard.writeText(temp);
+    NotificationManager.success("Success message", "Title here");
   }
 
   if (menu == 0) {
@@ -187,7 +131,7 @@ function Navbar({
             Export Data
           </div>
           <div className="navbar--analyze" onClick={printSomething}>
-            Analyze Data
+            Copy Data
           </div>
           <div className="navbar--delete" onClick={delete_all_data}>
             Delete Data
@@ -199,3 +143,71 @@ function Navbar({
 }
 
 export default Navbar;
+
+// let temp = "";
+//       for (let i in navbarPDF) {
+//         temp =
+//           temp +
+//           navbarPDF[i].name +
+//           " " +
+//           navbarPDF[i].rep +
+//           " rep(s) " +
+//           navbarPDF[i].weight +
+//           " pound(s)\n";
+//       }
+//       let pdf_height = 40 + 10 * navbarPDF.length;
+//       if (pdf_height < 300) {
+//         pdf_height = 300;
+//       }
+//       const doc = new jsPDF("p", "px", [300, pdf_height]);
+//       doc.setFillColor("#f6f6f6");
+//       doc.rect(0, 0, 300, pdf_height, "F");
+//       doc.setFillColor("#ff6961");
+//       doc.roundedRect(
+//         Math.floor(Math.random() * (300 - 71)) + 1,
+//         Math.floor(Math.random() * (pdf_height - 71)) + 1,
+//         69,
+//         69,
+//         8,
+//         8,
+//         "F"
+//       );
+//       doc.setFillColor("#93e9be");
+//       doc.roundedRect(
+//         Math.floor(Math.random() * (300 - 71)) + 1,
+//         Math.floor(Math.random() * (pdf_height - 71)) + 1,
+//         69,
+//         69,
+//         8,
+//         8,
+//         "F"
+//       );
+//       doc.setFillColor("#abd7eb");
+//       doc.roundedRect(
+//         Math.floor(Math.random() * (300 - 71)) + 1,
+//         Math.floor(Math.random() * (pdf_height - 71)) + 1,
+//         69,
+//         69,
+//         8,
+//         8,
+//         "F"
+//       );
+//       doc.setFont("Courier");
+//       var img = new Image();
+//       img.src = "hybrid.png";
+//       doc.addImage(img, "png", 267, pdf_height - 33, 30, 30);
+//       doc.addImage(img, "png", 267, 3, 30, 30);
+//       doc.setFontSize(20);
+//       let dateObj = new Date();
+//       let month = dateObj.getMonth() + 1; //months from 1-12
+//       let day = dateObj.getDate();
+//       let year = dateObj.getFullYear();
+
+//       let newdate = year + "-" + month + "/" + day;
+//       doc.text("Hybrid Trainings\n" + newdate, 10, 15);
+
+//       doc.setFontSize(12);
+//       doc.text("https://weibanghuang.github.io/hybrid", 10, pdf_height - 10);
+//       doc.setFontSize(10);
+//       doc.text(temp, 10, 60);
+//       doc.save("hybrid.pdf");
