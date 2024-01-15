@@ -1,6 +1,6 @@
 import React from "react";
 import { jsPDF } from "jspdf";
-
+import Canvas from "./Canvas.jsx";
 function Navbar({
   workout,
   setWorkout,
@@ -94,6 +94,7 @@ function Navbar({
   } else {
     return (
       <div className="navbar--wrap">
+        <Canvas className="canvas" navbarpdf={navbarPDF} />
         <div className="navbar--wrap--inline">
           <div className="navbar--logo">HYBRID TRAININGS</div>
           <button className="navbar--menu" onClick={toggleMenu}>

@@ -83,7 +83,7 @@ function Inputbox({
 
     //hhmmss 12 hr complete
     const ampm = hour >= 12 ? "PM" : "AM";
-    let twelvehour = 0;
+    let twelvehour = hour;
     if (hour >= 13) {
       twelvehour = hour - 12;
     } else if (hour == 0) {
