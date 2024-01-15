@@ -64,20 +64,44 @@ function Navbar({
       download.remove();
     }
   }
+  function double_format(a) {
+    if (a.toString().length == 1) {
+      a = "0" + a;
+    }
+    return a;
+  }
   function printSomething() {
-    let temp = "";
+    let ptime = navbarPDF[navbarPDF.length - 1].time - navbarPDF[0].time;
+    let psec = ptime % 60;
+    let pmin = ((ptime - psec) / 60) % 60;
+    let phr = ((ptime - psec) / 60 - pmin) / 60;
+
+    let dateObj = new Date();
+    let month = dateObj.getMonth() + 1; //months from 1-12
+    let day = dateObj.getDate();
+    let year = dateObj.getFullYear();
+
+    let newdate = year + "-" + month + "/" + day;
+    let temp =
+      newdate +
+      " Duration: " +
+      double_format(phr) +
+      ":" +
+      double_format(pmin) +
+      ":" +
+      double_format(psec) +
+      "\n";
     for (let i in navbarPDF) {
       temp =
         temp +
         navbarPDF[i].name +
         " " +
         navbarPDF[i].rep +
-        " rep(s) " +
+        " rep " +
         navbarPDF[i].weight +
-        " pound(s)\n";
+        " pound\n";
     }
     navigator.clipboard.writeText(temp);
-    NotificationManager.success("Success message", "Title here");
   }
 
   if (menu == 0) {
