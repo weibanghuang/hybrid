@@ -71,11 +71,16 @@ function Navbar({
     return a;
   }
   function printSomething() {
-    let ptime = navbarPDF[navbarPDF.length - 1].time - navbarPDF[0].time;
+    let a1 = navbarPDF[navbarPDF.length - 1].time.substring(0, 2);
+    let a2 = navbarPDF[navbarPDF.length - 1].time.substring(2, 4);
+    let a3 = navbarPDF[navbarPDF.length - 1].time.substring(4, 6);
+    let b1 = navbarPDF[0].time.substring(0, 2);
+    let b2 = navbarPDF[0].time.substring(2, 4);
+    let b3 = navbarPDF[0].time.substring(4, 6);
+    let ptime = a1 * 60 + a2 + a3 - (b1 * 60 + b2 + b3);
     let psec = ptime % 60;
     let pmin = ((ptime - psec) / 60) % 60;
     let phr = ((ptime - psec) / 60 - pmin) / 60;
-
     let dateObj = new Date();
     let month = dateObj.getMonth() + 1; //months from 1-12
     let day = dateObj.getDate();
